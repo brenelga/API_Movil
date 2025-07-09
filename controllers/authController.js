@@ -15,7 +15,7 @@ exports.register = async(req, res) => {
             vehiculo
         } = req.body;
         
-        const response = await axios.post('http://localhost:8000/vigenere/cifrar', {
+        const response = await axios.post('https://api-python-7bsm.onrender.com/vigenere/cifrar', {
             texto: contrasena,
             clave: usuario
         });
@@ -63,7 +63,7 @@ exports.login = async (req, res) => {
             return res.status(404).json({error: 'Usuario no encontrado'});
         }
 
-        const response = await axios.post('http://localhost:8000/vigenere/cifrar', {
+        const response = await axios.post('https://api-python-7bsm.onrender.com/vigenere/cifrar', {
             texto: contrasena,
             clave: usuario
         });

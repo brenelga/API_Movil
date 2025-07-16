@@ -9,6 +9,7 @@ const UsuarioSchema = new mongoose.Schema({
     credenciales: {
         usuario: {type: String, required: true},
         contrasena: {type: String, required: true},
+        tipo: {type: String, required: true}
     },
     correo: [String],
     telefono: [String],

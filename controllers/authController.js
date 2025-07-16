@@ -7,12 +7,12 @@ const jwt = require('jsonwebtoken');
 exports.register = async(req, res) => {
     try {
         const {
-            nombre_usuario, // { nombre, ap_pat, ap_mat }
-            usuario,        // string
-            contrasena,     // string
+            nombre_usuario, 
+            usuario,        
+            contrasena,     
             correo,
             telefono,
-            vehiculo        // { marca, modelo, placas, estado_motor? }
+            vehiculo        
         } = req.body;
 
         // Cifrado Vigenère

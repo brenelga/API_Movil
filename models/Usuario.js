@@ -5,9 +5,11 @@ const UsuarioSchema = new mongoose.Schema({
         nombre: String,
         ap_pat: String,
         ap_mat: String,
-        usuario: String
     },
-    contrasena: {type: String, required: true},
+    credenciales: {
+        usuario: {type: String, required: true},
+        contrasena: {type: String, required: true},
+    },
     correo: [String],
     telefono: [String],
     datos_facturacion: {
@@ -23,7 +25,15 @@ const UsuarioSchema = new mongoose.Schema({
     },
     datos_pago: [{
         tarjeta: String,
-        vencimiento: Date
+        vencimiento: {
+            anio: Number,
+            mes: Number
+        },
+        nombre_tarjeta: {
+            nombre: String,
+            appat: String,
+            apmat: String
+        }
     }]
 }, { collection: 'Usuario'});
 

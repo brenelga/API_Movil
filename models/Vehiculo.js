@@ -6,6 +6,7 @@ const VehiculoSchema = new Schema({
     modelo: {type: String, required: true},
     placas: {type: String, required: true},
     propietario: [{ type: Types.ObjectId, ref: 'Usuario', required: true }],
+    VIN: {type: String, required: true},
     estado_motor: Boolean
 }, { collection: 'Vehiculo'});
 

@@ -10,12 +10,18 @@ app.use(cors());
 app.use(express.json());
 
 const authRoutes = require('./routes/auth');
-
 app.use('/api/auth', authRoutes);
 
-mongoose.connect(process.env.MONGO_URI).then(() => {
-    console.log('Conectado a MongoDB');
-    app.listen(3000, () => {
-        console.log('Servidor corriendo en http://localhost:3000');
-    });
-}).catch(err => console.error('Error de conexión: ', err));
+// Define el puerto usando la variable de entorno 'PORT' o 3000
+const PORT = process.env.PORT || 3000; 
+
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log('Conectado a MongoDB');
+        
+        // Usa la constante PORT
+        app.listen(PORT, () => { 
+            console.log(`Servidor corriendo en el puerto ${PORT}`);
+        });
+    })
+    .catch(err => console.error('Error de conexión: ', err));

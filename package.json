@@ -4,7 +4,8 @@
   "description": "apis for app movil",
   "main": "index.js",
   "scripts": {
-    "test": "npm install"
+    "test": "npm install",
+    "start": "node index.js"
   },
   "author": "",
   "license": "ISC",

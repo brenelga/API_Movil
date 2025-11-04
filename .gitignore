@@ -1,2 +1,5 @@
 .env
 /node_modules
+pipeline.py
+populate_large_dataset.js
+dataset.csv

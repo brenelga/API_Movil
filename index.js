@@ -10,9 +10,11 @@ app.use(cors());
 app.use(express.json());
 
 const authRoutes = require('./routes/auth');
-app.use('/api/auth', authRoutes);
+const ubicacionesRutas = require('./api/Ubicaciones');
 
-// Define el puerto usando la variable de entorno 'PORT' o 3000
+app.use('/api/auth', authRoutes);
+app.use('/api/ubicaciones', ubicacionesRutas);
+
 const PORT = process.env.PORT || 3000; 
 
 mongoose.connect(process.env.MONGO_URI)

@@ -1,8 +1,5 @@
 const Usuario = require('../models/Usuario');
 const catalogoRegimenFiscal = require("../utils/CatalogoRegimenFiscal");
-const express = require('express');
-
-const router = express.Router();
 
 exports.actualizarFacturacion = async (req, res) => {
     try {

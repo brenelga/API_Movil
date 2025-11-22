@@ -1,7 +1,7 @@
 const Usuario = require('../models/Usuario');
 const catalogoRegimenFiscal = require("../utils/CatalogoRegimenFiscal");
 
-exports.actualizarFacturacion = async (req, res) => {
+const actualizarFacturacion = async (req, res) => {
     try {
         const userId = req.user.id; // viene del JWT
         const datos = req.body;     // toda la info enviada desde la app móvil
@@ -36,7 +36,7 @@ exports.actualizarFacturacion = async (req, res) => {
     }
 };
 
-exports.obtenerDatosFacturacion = async (req, res) => {
+const obtenerDatosFacturacion = async (req, res) => {
     try {
         const userId = req.user.id;
 
@@ -56,7 +56,7 @@ exports.obtenerDatosFacturacion = async (req, res) => {
     }
 };
 
-exports.validarRegimenFiscal = (req, res) => {
+const validarRegimenFiscal = (req, res) => {
     try {
         const { regimen } = req.body;
 

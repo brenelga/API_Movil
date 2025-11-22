@@ -16,6 +16,7 @@ const VehiculoController = require('./controllers/VehiculoController');
 const facturacionRutas = require('./routes/facturacion');
 const arcoRutas = require('./routes/arco');
 const contactoRutas = require('./routes/contacto');
+const alertasRutas = require('./routes/alertas');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/ubicaciones', ubicacionesRutas);
@@ -23,6 +24,7 @@ app.post('/api/vehiculos/agregar', authMiddleware, VehiculoController.agregarVeh
 app.use('/api/facturacion', facturacionRutas);
 app.use('/api/arco', arcoRutas);
 app.use('/api/contacto', contactoRutas);
+app.use('/api/alertas', alertasRutas);
 
 const PORT = process.env.PORT || 3000;
 

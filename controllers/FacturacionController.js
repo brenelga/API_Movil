@@ -85,4 +85,8 @@ exports.validarRegimenFiscal = (req, res) => {
     }
 };
 
-module.exports = FacturacionController;
+module.exports = {
+    actualizarFacturacion,
+    obtenerDatosFacturacion,
+    validarRegimenFiscal
+}

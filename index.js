@@ -16,7 +16,7 @@ const vehiculoController = require('./controllers/VehiculoController');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/ubicaciones', ubicacionesRutas);
-app.post('/api/vehiculos/agregar', authMiddleware, vehiculoController.agregarVehiculo);
+app.post('/api/vehiculos/agregar', authMiddleware, VehiculoController.agregarVehiculo);
 
 const PORT = process.env.PORT || 3000;
 

@@ -82,4 +82,4 @@ const ArcoController = {
 
 };
 
-module.exports = ARCOController;
+module.exports = ArcoController;

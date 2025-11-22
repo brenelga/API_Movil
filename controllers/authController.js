@@ -12,7 +12,7 @@ exports.register = async(req, res) => {
             contrasena,     
             correo,
             telefono,
-            vehiculo        
+            numero_vehiculos
         } = req.body;
 
         // Cifrado Vigenère
@@ -24,7 +24,6 @@ exports.register = async(req, res) => {
         const cifradoVignere = response.data.resultado;
         const hashFinal = await bcrypt.hash(cifradoVignere, 10);
 
-        // Crear usuario con nuevo esquema
         const nuevoUsuario = new Usuario({
             nombre_usuario: {
                 nombre: nombre_usuario.nombre,
@@ -34,31 +33,27 @@ exports.register = async(req, res) => {
             credenciales: {
                 usuario: usuario,
                 contrasena: hashFinal,
-                tipo: 'Usuario' // default
+                tipo: 'Usuario'
             },
             correo,
-            telefono
+            telefono,
+            numero_vehiculos: numero_vehiculos ?? 1,
+            vehiculos_registrados: 0
         });
 
-        const usuarioGuardado = await nuevoUsuario.save();
+        await nuevoUsuario.save();
 
-        // Crear vehículo relacionado
-        const nuevoVehiculo = new Vehiculo({
-            marca: vehiculo.marca,
-            modelo: vehiculo.modelo,
-            placas: vehiculo.placas,
-            estado_motor: vehiculo.estado_motor ?? true,
-            propietario: [usuarioGuardado._id]
+        res.status(201).json({ 
+            mensaje: 'Usuario registrado correctamente. Agrega tus vehículos desde el panel.' 
         });
 
-        await nuevoVehiculo.save();
-
-        res.status(201).json({ mensaje: 'Usuario y Vehículo registrados correctamente' });
     } catch (error) {
         console.error('Error en el registro', error);
         res.status(500).json({ error: 'Error al realizar el registro' });
     }
 };
+
+
 
 
 exports.login = async (req, res) => {

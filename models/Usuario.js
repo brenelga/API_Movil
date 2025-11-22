@@ -13,6 +13,10 @@ const UsuarioSchema = new mongoose.Schema({
     },
     correo: [String],
     telefono: [String],
+    
+    numero_vehiculos: { type: Number, default: 1 },
+    vehiculos_registrados: { type: Number, default: 0 },
+
     datos_facturacion: {
         calle: String,
         num_ext: Number,

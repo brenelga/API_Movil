@@ -7,7 +7,7 @@ router.post('/', authDispositivo, async(req, res) => {
     try {
         const {ubicacion} = req.body;
 
-        const {vehiculo} = req.dispositivo.vehiculo;
+        const vehiculo = req.dispositivo.vehiculo;
 
         const nuevaUbicacion = new Ubicacion({
             vehiculo,

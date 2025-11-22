@@ -13,10 +13,12 @@ const authRoutes = require('./routes/auth');
 const ubicacionesRutas = require('./api/Ubicaciones');
 const authMiddleware = require('./middleware/authMiddleware');
 const VehiculoController = require('./controllers/VehiculoController');
+const facturacionRutas = require('./routes/facturacion');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/ubicaciones', ubicacionesRutas);
 app.post('/api/vehiculos/agregar', authMiddleware, VehiculoController.agregarVehiculo);
+app.use('/api/facturacion', facturacionRutas);
 
 const PORT = process.env.PORT || 3000;
 

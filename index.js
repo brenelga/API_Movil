@@ -12,7 +12,7 @@ app.use(express.json());
 const authRoutes = require('./routes/auth');
 const ubicacionesRutas = require('./api/Ubicaciones');
 const authMiddleware = require('./middleware/authMiddleware');
-const vehiculoController = require('./controllers/VehiculoController');
+const VehiculoController = require('./controllers/VehiculoController');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/ubicaciones', ubicacionesRutas);

@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/authMiddleware');
 const MotorController = require('../controllers/MotorController');
-
-const MotorController = require('../controllers/MotorController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 // Usuario presiona el botón de bloqueo

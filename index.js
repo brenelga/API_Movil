@@ -17,6 +17,7 @@ const facturacionRutas = require('./routes/facturacion');
 const arcoRutas = require('./routes/arco');
 const contactoRutas = require('./routes/contacto');
 const alertasRutas = require('./routes/alertas');
+const vehiculoRutas = require('./routes/vehiculo');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/ubicaciones', ubicacionesRutas);
@@ -25,6 +26,7 @@ app.use('/api/facturacion', facturacionRutas);
 app.use('/api/arco', arcoRutas);
 app.use('/api/contacto', contactoRutas);
 app.use('/api/alertas', alertasRutas);
+app.use('/api/vehiculo', vehiculoRoutes);
 
 const PORT = process.env.PORT || 3000;
 

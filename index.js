@@ -26,7 +26,7 @@ app.use('/api/facturacion', facturacionRutas);
 app.use('/api/arco', arcoRutas);
 app.use('/api/contacto', contactoRutas);
 app.use('/api/alertas', alertasRutas);
-app.use('/api/vehiculo', vehiculoRoutes);
+app.use('/api/vehiculo', vehiculoRutas);
 
 const PORT = process.env.PORT || 3000;
 

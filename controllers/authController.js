@@ -12,18 +12,48 @@ exports.register = async(req, res) => {
             contrasena,     
             correo,
             telefono,
-            numero_vehiculos
+            numero_vehiculos,
+            entidad,
+            municipio
         } = req.body;
 
-        // Cifrado Vigenère
-        const response = await axios.post('https://api-python-7bsm.onrender.com/vigenere/cifrar', {
-            texto: contrasena,
-            clave: usuario
-        });
+        // -----------------------------------------
+        // 1. Consultar el modelo ML en Python
+        // -----------------------------------------
+        const riesgoResponse = await axios.post(
+            "https://modelo-production-c5b5.up.railway.app/predict-by-location", 
+            {
+                Entidad: entidad,
+                Municipio: municipio,
+                Vehiculos: numero_vehiculos ?? 1
+            }
+        );
+
+        const datosRiesgo = riesgoResponse.data;
+
+        if (datosRiesgo.error) {
+            return res.status(400).json({
+                error: "Entidad/Municipio inválido",
+                detalle: datosRiesgo
+            });
+        }
+
+        const precioSuscripcion = datosRiesgo.Total;
+
+        // --------------------------------------------------
+        // 2. Cifrado Vigenère -> Bcrypt
+        // --------------------------------------------------
+        const response = await axios.post(
+            'https://api-python-7bsm.onrender.com/vigenere/cifrar',
+            { texto: contrasena, clave: usuario }
+        );
 
         const cifradoVignere = response.data.resultado;
         const hashFinal = await bcrypt.hash(cifradoVignere, 10);
 
+        // --------------------------------------------------
+        // 3. Guardar usuario
+        // --------------------------------------------------
         const nuevoUsuario = new Usuario({
             nombre_usuario: {
                 nombre: nombre_usuario.nombre,
@@ -37,21 +67,27 @@ exports.register = async(req, res) => {
             },
             correo,
             telefono,
+            entidad,
+            municipio,
             numero_vehiculos: numero_vehiculos ?? 1,
-            vehiculos_registrados: 0
+            vehiculos_registrados: 0,
+            precio_suscripcion: precioSuscripcion   // <<---- NUEVO
         });
 
         await nuevoUsuario.save();
 
         res.status(201).json({ 
-            mensaje: 'Usuario registrado correctamente. Agrega tus vehículos desde el panel.' 
+            mensaje: 'Usuario registrado correctamente.',
+            precio_suscripcion: precioSuscripcion,
+            riesgo: datosRiesgo.Riesgo
         });
 
     } catch (error) {
-        console.error('Error en el registro', error);
+        console.error('Error en el registro', error.response?.data || error.message);
         res.status(500).json({ error: 'Error al realizar el registro' });
     }
 };
+
 
 
 

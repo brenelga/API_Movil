@@ -4,12 +4,12 @@ const axios = require('axios');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-exports.register = async(req, res) => {
+exports.register = async (req, res) => {
     try {
         const {
-            nombre_usuario, 
-            usuario,        
-            contrasena,     
+            nombre_usuario,
+            usuario,
+            contrasena,
             correo,
             telefono,
             numero_vehiculos,
@@ -18,10 +18,23 @@ exports.register = async(req, res) => {
         } = req.body;
 
         // -----------------------------------------
+        // Validación: Verificar que el usuario no exista
+        // -----------------------------------------
+        const existeUsuario = await Usuario.findOne({ 'credenciales.usuario': usuario });
+        if (existeUsuario) {
+            return res.status(400).json({ error: 'El nombre de usuario ya está en uso' });
+        }
+
+        const existeCorreo = await Usuario.findOne({ correo });
+        if (existeCorreo) {
+            return res.status(400).json({ error: 'El correo electrónico ya está registrado' });
+        }
+
+        // -----------------------------------------
         // 1. Consultar el modelo ML en Python
         // -----------------------------------------
         const riesgoResponse = await axios.post(
-            "https://modelo-production-c5b5.up.railway.app/predict-by-location", 
+            "https://modelo-production-c5b5.up.railway.app/predict-by-location",
             {
                 Entidad: entidad,
                 Municipio: municipio,
@@ -76,7 +89,7 @@ exports.register = async(req, res) => {
 
         await nuevoUsuario.save();
 
-        res.status(201).json({ 
+        res.status(201).json({
             mensaje: 'Usuario registrado correctamente.',
             precio_suscripcion: precioSuscripcion,
             riesgo: datosRiesgo.Riesgo

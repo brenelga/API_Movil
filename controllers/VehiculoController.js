@@ -101,3 +101,17 @@ exports.desbloquearMotor = async (req, res) => {
         return res.status(500).json({ error: "Error interno desbloqueando el motor" });
     }
 };
+
+exports.obtenerVehiculosUsuario = async (req, res) => {
+    try {
+        const userId = req.user.id; // Viene del authMiddleware
+
+        // Buscar todos los vehículos donde el usuario esté en el array de propietarios
+        const vehiculos = await Vehiculo.find({ propietario: userId });
+
+        return res.json({ vehicles: vehiculos });
+    } catch (error) {
+        console.error("Error obteniendo la lista de vehículos:", error);
+        return res.status(500).json({ error: "Error interno al obtener vehículos" });
+    }
+};

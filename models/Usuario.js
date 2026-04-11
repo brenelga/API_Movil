@@ -7,22 +7,22 @@ const UsuarioSchema = new mongoose.Schema({
         ap_mat: String,
     },
     credenciales: {
-        usuario: {type: String, required: true},
-        contrasena: {type: String, required: true},
-        tipo: {type: String, required: true}
+        usuario: { type: String, required: true },
+        contrasena: { type: String, required: true },
+        tipo: { type: String, required: true }
     },
     correo: [String],
     telefono: [String],
-    
+
     numero_vehiculos: { type: Number, default: 1 },
     vehiculos_registrados: { type: Number, default: 0 },
 
-    precio_suscripcion: {type: Number, required: true},
+    precio_suscripcion: { type: Number, required: true },
 
     datos_facturacion: {
         calle: String,
-        num_ext: Number,
-        num_int: Number,
+        num_ext: String,
+        num_int: String,
         cp: String,
         colonia: String,
         estado: String,
@@ -42,6 +42,6 @@ const UsuarioSchema = new mongoose.Schema({
             apmat: String
         }
     }]
-}, { collection: 'Usuario'});
+}, { collection: 'Usuario' });
 
 module.exports = mongoose.model('Usuario', UsuarioSchema);

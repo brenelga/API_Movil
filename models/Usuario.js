@@ -16,6 +16,7 @@ const UsuarioSchema = new mongoose.Schema({
 
     numero_vehiculos: { type: Number, default: 1 },
     vehiculos_registrados: { type: Number, default: 0 },
+    push_subscription: { type: Object, default: null },
 
     precio_suscripcion: { type: Number, required: true },
 

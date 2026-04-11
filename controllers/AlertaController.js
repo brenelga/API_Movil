@@ -1,5 +1,6 @@
 const Alerta = require('../models/Alerta');
 const Usuario = require('../models/Usuario');
+const webpush = require('web-push');
 
 const AlertaController = {
 
@@ -24,8 +25,30 @@ const AlertaController = {
 
             await alerta.save();
 
-            // Aquí podrías activar notificaciones push
-            // notifyUser(usuario._id, { tipo, contenido });
+            // 📌 4. Mandar notificación push si el usuario existe
+            if (usuario && usuario.pushSubscriptions && usuario.pushSubscriptions.length > 0) {
+                const payload = JSON.stringify({
+                    title: `¡Alerta de Seguridad!`,
+                    body: `${tipo}: ${contenido}`,
+                    icon: '/logos/logo.png',
+                    data: { url: '/user/dashboard' }
+                });
+
+                // Mandar a todos los dispositivos registrados del usuario
+                const notifications = usuario.pushSubscriptions.map(sub =>
+                    webpush.sendNotification(sub, payload).catch(err => {
+                        console.error("Error mandando push a un dispositivo:", err.endpoint);
+                        // Opcional: remover suscripción si expira/inválida
+                        if (err.statusCode === 410 || err.statusCode === 404) {
+                            return Usuario.findByIdAndUpdate(usuario._id, {
+                                $pull: { pushSubscriptions: { endpoint: sub.endpoint } }
+                            });
+                        }
+                    })
+                );
+
+                await Promise.allSettled(notifications);
+            }
 
             res.status(201).json({
                 ok: true,

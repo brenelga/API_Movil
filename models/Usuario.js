@@ -16,7 +16,6 @@ const UsuarioSchema = new mongoose.Schema({
 
     numero_vehiculos: { type: Number, default: 1 },
     vehiculos_registrados: { type: Number, default: 0 },
-    push_subscription: { type: Object, default: null },
 
     precio_suscripcion: { type: Number, required: true },
 
@@ -41,6 +40,13 @@ const UsuarioSchema = new mongoose.Schema({
             nombre: String,
             appat: String,
             apmat: String
+        }
+    }],
+    pushSubscriptions: [{
+        endpoint: { type: String, required: true },
+        keys: {
+            p256dh: { type: String, required: true },
+            auth: { type: String, required: true }
         }
     }]
 }, { collection: 'Usuario' });

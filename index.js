@@ -27,6 +27,7 @@ app.use('/api/arco', arcoRutas);
 app.use('/api/contacto', contactoRutas);
 app.use('/api/alertas', alertasRutas);
 app.use('/api/vehiculo', vehiculoRutas);
+app.use('/api/usuarios', require('./routes/user'));
 
 const PORT = process.env.PORT || 3000;
 
